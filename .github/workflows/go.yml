@@ -27,6 +27,8 @@ jobs:
       with:
         version: v1.31
         args: --issues-exit-code=0 --timeout=5m
+        working-directory: ./Go
 
     - name: Test
       run: go test -v ./...
+      working-directory: ./Go
