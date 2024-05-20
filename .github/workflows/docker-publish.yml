@@ -33,4 +33,4 @@ jobs:
         context: ./${{ matrix.component }}
         file: ./${{ matrix.component }}/Dockerfile
         push: true
-        tags: yourusername/myapp-${{ matrix.component }}:latest
+        tags: ashok8639289986/myapp-${{ matrix.component }}:latest
