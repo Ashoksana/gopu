@@ -7,9 +7,10 @@ on:
       - 'feature/**'
     paths:
       - 'Go/**'
+
 jobs:
   build:
-    name: Build
+    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -21,19 +22,11 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v2
 
-    - name: Get dependencies
-      run: |
-        go get -v -t -d ./...
-        if [ -f Gopkg.toml ]; then
-            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-            dep ensure
-        fi
-
-    - name: Build
-      run: go build -v ./...
+    - name: Lint with golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.31
+        args: --issues-exit-code=0 --timeout=5m
 
     - name: Test
       run: go test -v ./...
-
-    - name: Lint
-      run: golint ./...
