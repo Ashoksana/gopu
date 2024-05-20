@@ -2,12 +2,15 @@ name: WordPress CI
 
 on:
   push:
+    branches:
+      - main
+      - 'feature/**'
     paths:
       - 'WordPress/**'
 
 jobs:
   test:
-    name: Test PHP
+    name: Lint and Test
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +22,11 @@ jobs:
       with:
         php-version: '7.4'
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
-
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    - name: Run tests
+    - name: Lint with PHPCS
+      run: ./vendor/bin/phpcs --standard=WordPress
+
+    - name: Run tests with PHPUnit
       run: ./vendor/bin/phpunit
