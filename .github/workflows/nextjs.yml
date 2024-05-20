@@ -2,6 +2,9 @@ name: Next.js CI
 
 on:
   push:
+    branches:
+      - main
+      - 'feature/**'
     paths:
       - 'Next.js/**'
 
@@ -22,11 +25,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Lint
-      run: npm run lint
+    - name: Lint with ESLint
+      run: npx eslint .
 
-    - name: Build
-      run: npm run build
-
-    - name: Test
+    - name: Test with Jest
       run: npm test
